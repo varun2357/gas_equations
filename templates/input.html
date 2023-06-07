@@ -1,0 +1,11 @@
+Choose a City<SELECT name="city">
+    {% for c in units_list %}
+        <OPTION value={{c}}>{{c}}</option>
+    {% endfor %}
+    </SELECT>
+
+Choose a City<SELECT name="unit">
+    {% for b in units_list[city] %}
+        <OPTION value={{b}}>{{b}}</option>
+    {% endfor %}
+    </SELECT>

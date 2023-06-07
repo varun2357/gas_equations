@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Size</title>
+</head>
+<body>
+    <h1>Units of Selected Category:</h1>
+    <ul>
+        {% for unit, value in units.items() %}
+            <li>{{ unit }}: {{ value }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

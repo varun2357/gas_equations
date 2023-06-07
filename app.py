@@ -44,26 +44,75 @@ units_list = {
     'au' : au,
 }
 
-sg1 = round(float("1"), 3)
-sg2 = round(float("2"), 3)
-t1 = round(float("3"), 3)
-t2 = round(float("4"), 3)
-p1 = round(float("5"), 3)
-p2 = round(float("6"), 3)
-unit_class = "wu"
-from_unit = "kg/hr"
-to_unit = "gm/hr"
-value = 7
+# sg1 = round(float("1"), 3)
+# sg2 = round(float("2"), 3)
+# t1 = round(float("3"), 3)
+# t2 = round(float("4"), 3)
+# p1 = round(float("5"), 3)
+# p2 = round(float("6"), 3)
+# unit_class = "wu"
+# from_unit = "kg/hr"
+# to_unit = "gm/hr"
+# value = 7
 
 
 @app.route("/")
 def hello_world():
-  sf1 = cal_sf_not_au(sg1,sg2,t1,t2,p1,p2)
-  sf2 = cal_sf_au(sg1,sg2,t1,t2,p1,p2)
-  result = convert_units(units_list, unit_class, from_unit, to_unit, value)
-  return render_template('home.html', units=units_list,sf1 = sf1,sf2 = sf2,result = result)
+  # sf1 = cal_sf_not_au(sg1,sg2,t1,t2,p1,p2)
+  # sf2 = cal_sf_au(sg1,sg2,t1,t2,p1,p2)
+  # result = convert_units(units_list, unit_class, from_unit, to_unit, value)
+  # return render_template('home.html', units=units_list,sf1 = sf1,sf2 = sf2,result = result)
+  return render_template('home2.html',categories=units_list.keys())
+
+@app.route('/conversion', methods=['GET', 'POST'])
+def conversion():
+    if request.method == 'POST':
+        selected_category = request.form.get('category')
+        if selected_category:
+            selected_units = units_list[selected_category]
+            input1 = request.form.get('input1')
+            input2 = request.form.get('input2')
+            input3 = request.form.get('input3')
+
+            # Check if all inputs are present
+            if input1 and input2 and input3:
+                value1 = selected_units.get(input1)
+                value2 = selected_units.get(input2)
+
+                if value1 is not None and value2 is not None:
+                    sum_values = convert_units(units_list,selected_category,input1,input2,float(input3))
+                    #sum_values = value1 + value2 + float(input3)
+                    return render_template('conversion.html', categories=units_list.keys(), units=selected_units, sum_values=sum_values)
+                else:
+                    error_message = "Invalid units selected."
+                    return render_template('conversion.html', categories=units_list.keys(), units=selected_units, error_message=error_message)
+            else:
+                error_message = "Please fill in all input fields."
+                return render_template('conversion.html', categories=units_list.keys(), units=selected_units, error_message=error_message)
+        else:
+            error_message = "Please select a category."
+            return render_template('conversion.html', categories=units_list.keys(), units={}, error_message=error_message)
+    else:
+        return render_template('conversion.html', categories=units_list.keys(), units={}, sum_values=None)
 
 
+
+
+
+@app.route('/size', methods=['GET', 'POST'])
+def size():
+    if request.method == 'POST':
+        selected_category = request.form.get('category')
+        selected_units = units_list[selected_category]
+
+        return render_template('size.html', units=selected_units)
+    else:
+        return render_template('size.html', units={})
+
+@app.route("/input")
+def input():
+    return render_template("input.html",units_list=units_list )
+  
 @app.route("/api/units")
 def list_units():
   return jsonify(units_list)

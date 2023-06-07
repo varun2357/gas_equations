@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Conversion</title>
+</head>
+<body>
+    <h1>Conversion</h1>
+    <form action="/conversion" method="POST">
+        <select name="category">
+            {% for category in categories %}
+                <option value="{{ category }}">{{ category }}</option>
+            {% endfor %}
+        </select>
+        {% if units %}
+            <select name="input1">
+                {% for unit, value in units.items() %}
+                    <option value="{{ unit }}">{{ unit }}</option>
+                {% endfor %}
+            </select>
+            <select name="input2">
+                {% for unit, value in units.items() %}
+                    <option value="{{ unit }}">{{ unit }}</option>
+                {% endfor %}
+            </select>
+        {% endif %}
+        <input type="text" name="input3">
+        <button type="submit">Calculate</button>
+    </form>
+    {% if error_message %}
+        <h2>{{ error_message }}</h2>
+    {% elif sum_values is defined %}
+        <h2>Sum of Inputs: {{ sum_values }}</h2>
+    {% endif %}
+</body>
+</html>
