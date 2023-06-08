@@ -109,12 +109,19 @@ def size():
         category = request.form.get('category')
         
         if 'initialize' in request.form:  # Check if 'initialize' button is clicked
-            sg1 = 1
-            t1 = 2
-            p1 = 3
-            sg1_offset = True
-            t1_offset = True
-            p1_offset = True
+            initial_sg1 = 1
+            initial_t1 = 2
+            initial_p1 = 3
+            initial_sg1_offset = True
+            initial_t1_offset = True
+            initial_p1_offset = True
+        else:
+            initial_sg1 = sg1
+            initial_t1 = t1
+            initial_p1 = p1
+            initial_sg1_offset = sg1_offset
+            initial_t1_offset = t1_offset
+            initial_p1_offset = p1_offset
 
         if sg1_offset:
             sg2 = sg2 + sg1
@@ -149,10 +156,12 @@ def size():
             else:
                 result = cal_sf_not_au(sg1,sg2,t1,t2,p1,p2)
 
-        return render_template('size.html', result=result, units_list=units_list)
+        return render_template('size.html', result=result, units_list=units_list,
+                               initial_sg1=initial_sg1, initial_t1=initial_t1, initial_p1=initial_p1,
+                               initial_sg1_offset=initial_sg1_offset, initial_t1_offset=initial_t1_offset,
+                               initial_p1_offset=initial_p1_offset)
 
     return render_template('size.html', units_list=units_list)
-
 @app.route("/api/units")
 def list_units():
   return jsonify(units_list)
