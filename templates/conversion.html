@@ -5,26 +5,23 @@
 </head>
 <body>
     <h1>Conversion</h1>
+    <h2>Unit Conversion in the category of {{selected_category}}</h2>
     <form action="/conversion" method="POST">
-        <select name="category">
-            {% for category in categories %}
-                <option value="{{ category }}">{{ category }}</option>
-            {% endfor %}
-        </select>
         {% if units %}
             <select name="input1">
                 {% for unit, value in units.items() %}
-                    <option value="{{ unit }}">{{ unit }}</option>
+                    <option value="{{ unit }}" {% if unit == selected_input1 %}selected{% endif %}>{{ unit }}</option>
                 {% endfor %}
             </select>
             <select name="input2">
                 {% for unit, value in units.items() %}
-                    <option value="{{ unit }}">{{ unit }}</option>
+                    <option value="{{ unit }}" {% if unit == selected_input2 %}selected{% endif %}>{{ unit }}</option>
                 {% endfor %}
             </select>
         {% endif %}
-        <input type="text" name="input3">
+        <input type="text" name="input3" value="{{ input3 }}">
         <button type="submit">Calculate</button>
+        <input type="hidden" name="category" value="{{ selected_category }}">
     </form>
     {% if error_message %}
         <h2>{{ error_message }}</h2>

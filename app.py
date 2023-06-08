@@ -62,8 +62,12 @@ def hello_world():
 
 @app.route('/conversion', methods=['GET', 'POST'])
 def conversion():
+    selected_category = None  # Default value for selected_category
+
     if request.method == 'POST':
-        selected_category = request.form.get('category')
+        category_from_home = request.form.get('category_from_home')
+        selected_category = category_from_home or request.form.get('category')
+
         if selected_category:
             selected_units = units_list[selected_category]
             input1 = request.form.get('input1')
@@ -76,20 +80,19 @@ def conversion():
                 value2 = selected_units.get(input2)
 
                 if value1 is not None and value2 is not None:
-                    sum_values = convert_units(units_list,selected_category,input1,input2,float(input3))
-                    #sum_values = value1 + value2 + float(input3)
-                    return render_template('conversion.html', categories=units_list.keys(), units=selected_units, sum_values=sum_values)
+                    sum_values = convert_units(units_list, selected_category, input1, input2, float(input3))
+                    return render_template('conversion.html', categories=units_list.keys(), units=selected_units, selected_category=selected_category, selected_input1=input1, selected_input2=input2, input3=input3, sum_values=sum_values)
                 else:
                     error_message = "Invalid units selected."
-                    return render_template('conversion.html', categories=units_list.keys(), units=selected_units, error_message=error_message)
+                    return render_template('conversion.html', categories=units_list.keys(), units=selected_units, selected_category=selected_category, selected_input1=input1, selected_input2=input2, input3=input3, error_message=error_message)
             else:
                 error_message = "Please fill in all input fields."
-                return render_template('conversion.html', categories=units_list.keys(), units=selected_units, error_message=error_message)
+                return render_template('conversion.html', categories=units_list.keys(), units=selected_units, selected_category=selected_category, selected_input1=input1, selected_input2=input2, input3=input3, error_message=error_message)
         else:
             error_message = "Please select a category."
-            return render_template('conversion.html', categories=units_list.keys(), units={}, error_message=error_message)
+            return render_template('conversion.html', categories=units_list.keys(), units={}, selected_category=selected_category, selected_input1=None, selected_input2=None, input3=None, error_message=error_message)
     else:
-        return render_template('conversion.html', categories=units_list.keys(), units={}, sum_values=None)
+        return render_template('conversion.html', categories=units_list.keys(), units={}, selected_category=selected_category, selected_input1=None, selected_input2=None, input3=None, sum_values=None)
 
 @app.route('/size', methods=['GET', 'POST'])
 def size():
