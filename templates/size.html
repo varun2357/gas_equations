@@ -50,7 +50,7 @@
         <label>Select Category:</label>
         <select name="category">
             {% for category in units_list.keys() %}
-                <option value="{{ category }}">{{ category }}</option>
+                <option value="{{ category }}" {% if category == selected_category %}selected{% endif %}>{{ category }}</option>
             {% endfor %}
         </select>
         <br><br>

@@ -159,7 +159,7 @@ def size():
         return render_template('size.html', result=result, units_list=units_list,
                                initial_sg1=initial_sg1, initial_t1=initial_t1, initial_p1=initial_p1,
                                initial_sg1_offset=initial_sg1_offset, initial_t1_offset=initial_t1_offset,
-                               initial_p1_offset=initial_p1_offset)
+                               initial_p1_offset=initial_p1_offset,selected_category=category)
 
     return render_template('size.html', units_list=units_list)
 @app.route("/api/units")
