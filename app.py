@@ -58,7 +58,7 @@ result = None
 
 @app.route("/")
 def hello_world():
-  return render_template('home1.html',categories=units_list.keys())
+  return render_template('home.html',categories=units_list.keys())
 
 @app.route('/conversion', methods=['GET', 'POST'])
 def conversion():
