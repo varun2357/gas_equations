@@ -44,25 +44,21 @@ units_list = {
     'au' : au,
 }
 
-# sg1 = round(float("1"), 3)
-# sg2 = round(float("2"), 3)
-# t1 = round(float("3"), 3)
-# t2 = round(float("4"), 3)
-# p1 = round(float("5"), 3)
-# p2 = round(float("6"), 3)
-# unit_class = "wu"
-# from_unit = "kg/hr"
-# to_unit = "gm/hr"
-# value = 7
+sg1 = 0.0
+t1 = 0.0
+p1 = 0.0
+sg2 = 0.0
+t2 = 0.0
+p2 = 0.0
+sg1_offset = False
+t1_offset = False
+p1_offset = False
+result = None
 
 
 @app.route("/")
 def hello_world():
-  # sf1 = cal_sf_not_au(sg1,sg2,t1,t2,p1,p2)
-  # sf2 = cal_sf_au(sg1,sg2,t1,t2,p1,p2)
-  # result = convert_units(units_list, unit_class, from_unit, to_unit, value)
-  # return render_template('home.html', units=units_list,sf1 = sf1,sf2 = sf2,result = result)
-  return render_template('home2.html',categories=units_list.keys())
+  return render_template('home1.html',categories=units_list.keys())
 
 @app.route('/conversion', methods=['GET', 'POST'])
 def conversion():
@@ -95,24 +91,60 @@ def conversion():
     else:
         return render_template('conversion.html', categories=units_list.keys(), units={}, sum_values=None)
 
-
-
-
-
 @app.route('/size', methods=['GET', 'POST'])
 def size():
     if request.method == 'POST':
-        selected_category = request.form.get('category')
-        selected_units = units_list[selected_category]
+        sg1 = float(request.form.get('sg1', 0))
+        sg2 = float(request.form.get('sg2', 0))
+        sg2_offset = float(request.form.get('sg2_offset', 0) or 0)
+        sg1_offset = bool(request.form.get('sg1_offset', False))
+        t1 = float(request.form.get('t1', 0))
+        t2 = float(request.form.get('t2', 0))
+        t2_offset = float(request.form.get('t2_offset', 0) or 0)
+        t1_offset = bool(request.form.get('t1_offset', False))
+        p1 = float(request.form.get('p1', 0))
+        p2 = float(request.form.get('p2', 0))
+        p2_offset = float(request.form.get('p2_offset', 0) or 0)
+        p1_offset = bool(request.form.get('p1_offset', False))
+        category = request.form.get('category')
 
-        return render_template('size.html', units=selected_units)
-    else:
-        return render_template('size.html', units={})
+        if sg1_offset:
+            sg2 = sg2 + sg1
+        else:
+            sg2 = sg2 + sg2_offset
 
-@app.route("/input")
-def input():
-    return render_template("input.html",units_list=units_list )
-  
+        if t1_offset:
+            t2 = t2 + t1
+        else:
+            t2 = t2 + t2_offset
+
+        if p1_offset:
+            p2 = p2 + p1
+        else:
+            p2 = p2 + p2_offset
+
+        if sg2 <= 0:
+            result = "Invalid sg1"
+        elif t2 <= 0:
+            result = "Invalid t1"
+        elif p2 <= 0:
+            result = "Invalid p1"
+        elif sg2 <= 0:
+            result = "Invalid sg2"
+        elif t2 <= 0:
+            result = "Invalid t2"
+        elif p2 <= 0:
+            result = "Invalid p2"
+        else:
+            if category == 'au':
+                result = cal_sf_au(sg1,sg2,t1,t2,p1,p2)
+            else:
+                result = cal_sf_not_au(sg1,sg2,t1,t2,p1,p2)
+
+        return render_template('size.html', result=result, units_list=units_list)
+
+    return render_template('size.html', units_list=units_list)
+
 @app.route("/api/units")
 def list_units():
   return jsonify(units_list)
