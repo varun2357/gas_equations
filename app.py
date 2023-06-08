@@ -94,19 +94,27 @@ def conversion():
 @app.route('/size', methods=['GET', 'POST'])
 def size():
     if request.method == 'POST':
-        sg1 = float(request.form.get('sg1', 0))
-        sg2 = float(request.form.get('sg2', 0))
+        sg1 = float(request.form.get('sg1', 0) or 0)
+        sg2 = float(request.form.get('sg2', 0) or 0)
         sg2_offset = float(request.form.get('sg2_offset', 0) or 0)
         sg1_offset = bool(request.form.get('sg1_offset', False))
-        t1 = float(request.form.get('t1', 0))
-        t2 = float(request.form.get('t2', 0))
+        t1 = float(request.form.get('t1', 0) or 0)
+        t2 = float(request.form.get('t2', 0) or 0)
         t2_offset = float(request.form.get('t2_offset', 0) or 0)
         t1_offset = bool(request.form.get('t1_offset', False))
-        p1 = float(request.form.get('p1', 0))
-        p2 = float(request.form.get('p2', 0))
+        p1 = float(request.form.get('p1', 0) or 0)
+        p2 = float(request.form.get('p2', 0) or 0)
         p2_offset = float(request.form.get('p2_offset', 0) or 0)
         p1_offset = bool(request.form.get('p1_offset', False))
         category = request.form.get('category')
+        
+        if 'initialize' in request.form:  # Check if 'initialize' button is clicked
+            sg1 = 1
+            t1 = 2
+            p1 = 3
+            sg1_offset = True
+            t1_offset = True
+            p1_offset = True
 
         if sg1_offset:
             sg2 = sg2 + sg1

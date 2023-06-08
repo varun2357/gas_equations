@@ -6,7 +6,7 @@
 <body>
     <h1>Size</h1>
     <form action="/size" method="POST">
-        <label><input type="checkbox" name="initialize" value="initialize">Initialize</label>
+        <button type="submit" name="initialize" value="true">Initialize</button>
         <br><br>
         <table>
             <tr>
@@ -16,10 +16,10 @@
                 <th>SG1 Offset</th>
             </tr>
             <tr>
-                <td><input type="number" step="0.01" name="sg1" value="{{ sg1 }}"></td>
+                <td><input type="number" step="0.01" name="sg1" value="{{ sg1 }}" {% if initialize %}readonly{% endif %}></td>
                 <td><input type="number" step="0.01" name="sg2" value="{{ sg2 }}"></td>
                 <td><input type="number" step="0.01" name="sg2_offset" value="{{ sg2_offset }}"></td>
-                <td><input type="checkbox" name="sg1_offset" {% if sg1_offset %}checked{% endif %}></td>
+                <td><input type="checkbox" name="sg1_offset" {% if sg1_offset or initialize %}checked{% endif %}></td>
             </tr>
             <tr>
                 <th>T1</th>
@@ -28,10 +28,10 @@
                 <th>T1 Offset</th>
             </tr>
             <tr>
-                <td><input type="number" step="0.01" name="t1" value="{{ t1 }}"></td>
+                <td><input type="number" step="0.01" name="t1" value="{{ t1 }}" {% if initialize %}readonly{% endif %}></td>
                 <td><input type="number" step="0.01" name="t2" value="{{ t2 }}"></td>
                 <td><input type="number" step="0.01" name="t2_offset" value="{{ t2_offset }}"></td>
-                <td><input type="checkbox" name="t1_offset" {% if t1_offset %}checked{% endif %}></td>
+                <td><input type="checkbox" name="t1_offset" {% if t1_offset or initialize %}checked{% endif %}></td>
             </tr>
             <tr>
                 <th>P1</th>
@@ -40,10 +40,10 @@
                 <th>P1 Offset</th>
             </tr>
             <tr>
-                <td><input type="number" step="0.01" name="p1" value="{{ p1 }}"></td>
+                <td><input type="number" step="0.01" name="p1" value="{{ p1 }}" {% if initialize %}readonly{% endif %}></td>
                 <td><input type="number" step="0.01" name="p2" value="{{ p2 }}"></td>
                 <td><input type="number" step="0.01" name="p2_offset" value="{{ p2_offset }}"></td>
-                <td><input type="checkbox" name="p1_offset" {% if p1_offset %}checked{% endif %}></td>
+                <td><input type="checkbox" name="p1_offset" {% if p1_offset or initialize %}checked{% endif %}></td>
             </tr>
         </table>
         <br>
