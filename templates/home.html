@@ -1,25 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
+    {% include 'bootstrap.html' %}
     <title>Home</title>
 </head>
 <body>
-    <h1>Select a category:</h1>
-    <form action="/conversion" method="POST">
-        <select name="category">
-            {% for category in categories %}
-                <option value="{{ category }}">{{ category }}</option>
-            {% endfor %}
-        </select>
-        <button type="submit">Conversion</button>
-    </form>
-    <form action="/size" method="POST">
-        <select name="category">
-            {% for category in categories %}
-                <option value="{{ category }}">{{ category }}</option>
-            {% endfor %}
-        </select>
-        <button type="submit">Size</button>
-    </form>
+    {% include 'nav.html' %}
+    {% include 'banner.html' %}
+    <div class = "container">
+        <h1>Select a category:</h1>
+        <form action="/conversion" method="POST">
+            <select name="category">
+                {% for category in categories %}
+                    <option value="{{ category }}">{{ category }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Conversion</button>
+        </form>
+        <form action="/size" method="POST">
+            <select name="category">
+                {% for category in categories %}
+                    <option value="{{ category }}">{{ category }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Size</button>
+        </form>
+    </div>
+    {% include 'footer.html' %}
 </body>
 </html>
