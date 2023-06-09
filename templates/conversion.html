@@ -1,32 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
+    {% include 'bootstrap.html' %}
     <title>Conversion</title>
 </head>
 <body>
-    <h1>Conversion</h1>
-    <h2>Unit Conversion in the category of {{selected_category}}</h2>
-    <form action="/conversion" method="POST">
-        {% if units %}
-            <select name="input1">
-                {% for unit, value in units.items() %}
-                    <option value="{{ unit }}" {% if unit == selected_input1 %}selected{% endif %}>{{ unit }}</option>
-                {% endfor %}
-            </select>
-            <select name="input2">
-                {% for unit, value in units.items() %}
-                    <option value="{{ unit }}" {% if unit == selected_input2 %}selected{% endif %}>{{ unit }}</option>
-                {% endfor %}
-            </select>
+    {% include 'nav.html' %}
+    {% include 'banner.html' %}
+    <div class = "container">
+        <h1>Conversion</h1>
+        <h2>Unit Conversion in the category of {{selected_category}}</h2>
+        <form action="/conversion" method="POST">
+            {% if units %}
+                <select class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" name="input1">
+                    {% for unit, value in units.items() %}
+                        <option value="{{ unit }}" {% if unit == selected_input1 %}selected{% endif %}>{{ unit }}</option>
+                    {% endfor %}
+                </select>
+                <select class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" name="input2">
+                    {% for unit, value in units.items() %}
+                        <option value="{{ unit }}" {% if unit == selected_input2 %}selected{% endif %}>{{ unit }}</option>
+                    {% endfor %}
+                </select>
+            {% endif %}
+            <input type="text" name="input3" value="{{ input3 }}">
+            <button class="btn btn-outline-primary float-right align-middle" type="submit">Calculate</button>
+            <input type="hidden" name="category" value="{{ selected_category }}">
+        </form>
+        {% if error_message %}
+            <h2>{{ error_message }}</h2>
+        {% elif sum_values is defined %}
+            <h2>Sum of Inputs: {{ sum_values }}</h2>
         {% endif %}
-        <input type="text" name="input3" value="{{ input3 }}">
-        <button type="submit">Calculate</button>
-        <input type="hidden" name="category" value="{{ selected_category }}">
-    </form>
-    {% if error_message %}
-        <h2>{{ error_message }}</h2>
-    {% elif sum_values is defined %}
-        <h2>Sum of Inputs: {{ sum_values }}</h2>
-    {% endif %}
+    </div>
+    {% include 'footer.html' %}
 </body>
 </html>

@@ -1,48 +1,48 @@
 from flask import Flask, render_template, jsonify, request
-#from database import load_jobs_from_db, load_job_from_db, add_application_to_db
+from database import load_dictionary
 from calculations import cal_sf_not_au, cal_sf_au, convert_units
 
 app = Flask(__name__)
 
-sfu = {
-  'slpm': 1,
-  'slph': 2,
-  'sccm': 3,
-  'sm3/hr': 4,
-  'scfm': 5,
-  'scfh': 6,
-}
-mfu ={
-  'nlpm': 7,
-  'nm3/hr': 8,
-  'nlph': 9,
-}
-wu = {
-  'kg/hr': 10,
-  'gm/hr': 11,
-  'ton/hr': 12,
-  'lb/hr': 13,
-  'ppm': 14,
-  'ton/day': 15,
-  'nm3/hr': 16,
-  'nlph': 17,
-  'nlpm': 18,
-}
-au = {
-'lpm': 19,
-'lph': 20,
-'m3/hr': 21,
-'ccm': 22,
-'cfh': 23,
-'cfm': 24,
-}
+# sfu = {
+#   'slpm': 1,
+#   'slph': 2,
+#   'sccm': 3,
+#   'sm3/hr': 4,
+#   'scfm': 5,
+#   'scfh': 6,
+# }
+# mfu ={
+#   'nlpm': 7,
+#   'nm3/hr': 8,
+#   'nlph': 9,
+# }
+# wu = {
+#   'kg/hr': 10,
+#   'gm/hr': 11,
+#   'ton/hr': 12,
+#   'lb/hr': 13,
+#   'ppm': 14,
+#   'ton/day': 15,
+#   'nm3/hr': 16,
+#   'nlph': 17,
+#   'nlpm': 18,
+# }
+# au = {
+# 'lpm': 19,
+# 'lph': 20,
+# 'm3/hr': 21,
+# 'ccm': 22,
+# 'cfh': 23,
+# 'cfm': 24,
+# }
 
-units_list = {
-    'sfu': sfu,
-    'mfu': mfu,
-    'wu': wu,
-    'au' : au,
-}
+# units_list = {
+#     'sfu': sfu,
+#     'mfu': mfu,
+#     'wu': wu,
+#     'au' : au,
+# }
 
 sg1 = 0.0
 t1 = 0.0
@@ -54,6 +54,8 @@ sg1_offset = False
 t1_offset = False
 p1_offset = False
 result = None
+
+units_list = load_dictionary()
 
 
 @app.route("/")

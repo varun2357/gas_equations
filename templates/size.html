@@ -1,64 +1,70 @@
 <!DOCTYPE html>
 <html>
 <head>
+    {% include 'bootstrap.html' %}
     <title>Size</title>
 </head>
 <body>
-    <h1>Size</h1>
-    <form action="/size" method="POST">
-        <button type="submit" name="initialize" value="true">Initialize</button>
-        <br><br>
-        <table>
-            <tr>
-                <th>SG1</th>
-                <th>SG2</th>
-                <th>Offset SG2</th>
-                <th>SG1 Offset</th>
-            </tr>
-            <tr>
-                <td><input type="number" step="0.001" name="sg1" value="{{ initial_sg1 }}" {% if initialize %}readonly{% endif %}></td>
-                <td><input type="number" step="0.001" name="sg2" value="{{ sg2 }}"></td>
-                <td><input type="number" step="0.001" name="sg2_offset" value="{{ sg2_offset }}"></td>
-                <td><input type="checkbox" name="sg1_offset" {% if initial_sg1_offset or initialize %}checked{% endif %}></td>
-            </tr>
-            <tr>
-                <th>T1</th>
-                <th>T2</th>
-                <th>Offset T2</th>
-                <th>T1 Offset</th>
-            </tr>
-            <tr>
-                <td><input type="number" step="0.001" name="t1" value="{{ initial_t1 }}" {% if initialize %}readonly{% endif %}></td>
-                <td><input type="number" step="0.001" name="t2" value="{{ t2 }}"></td>
-                <td><input type="number" step="0.001" name="t2_offset" value="{{ t2_offset }}"></td>
-                <td><input type="checkbox" name="t1_offset" {% if initial_t1_offset or initialize %}checked{% endif %}></td>
-            </tr>
-            <tr>
-                <th>P1</th>
-                <th>P2</th>
-                <th>Offset P2</th>
-                <th>P1 Offset</th>
-            </tr>
-            <tr>
-                <td><input type="number" step="0.001" name="p1" value="{{ initial_p1 }}" {% if initialize %}readonly{% endif %}></td>
-                <td><input type="number" step="0.001" name="p2" value="{{ p2 }}"></td>
-                <td><input type="number" step="0.001" name="p2_offset" value="{{ p2_offset }}"></td>
-                <td><input type="checkbox" name="p1_offset" {% if initial_p1_offset or initialize %}checked{% endif %}></td>
-            </tr>
-        </table>
+    {% include 'nav.html' %}
+    {% include 'banner.html' %}
+    <div class = "container">
+        <h1>Size</h1>
+        <form action="/size" method="POST">
+            <button class="btn btn-outline-primary float-right align-middle" type="submit" name="initialize" value="true">Initialize</button>
+            <br><br>
+            <table>
+                <tr>
+                    <th>SG1</th>
+                    <th>SG2</th>
+                    <th>Offset SG2</th>
+                    <th>SG1 Offset</th>
+                </tr>
+                <tr>
+                    <td><input type="number" step="0.001" name="sg1" value="{{ initial_sg1 }}" {% if initialize %}readonly{% endif %}></td>
+                    <td><input type="number" step="0.001" name="sg2" value="{{ sg2 }}"></td>
+                    <td><input type="number" step="0.001" name="sg2_offset" value="{{ sg2_offset }}"></td>
+                    <td><input type="checkbox" name="sg1_offset" {% if initial_sg1_offset or initialize %}checked{% endif %}></td>
+                </tr>
+                <tr>
+                    <th>T1</th>
+                    <th>T2</th>
+                    <th>Offset T2</th>
+                    <th>T1 Offset</th>
+                </tr>
+                <tr>
+                    <td><input type="number" step="0.001" name="t1" value="{{ initial_t1 }}" {% if initialize %}readonly{% endif %}></td>
+                    <td><input type="number" step="0.001" name="t2" value="{{ t2 }}"></td>
+                    <td><input type="number" step="0.001" name="t2_offset" value="{{ t2_offset }}"></td>
+                    <td><input type="checkbox" name="t1_offset" {% if initial_t1_offset or initialize %}checked{% endif %}></td>
+                </tr>
+                <tr>
+                    <th>P1</th>
+                    <th>P2</th>
+                    <th>Offset P2</th>
+                    <th>P1 Offset</th>
+                </tr>
+                <tr>
+                    <td><input type="number" step="0.001" name="p1" value="{{ initial_p1 }}" {% if initialize %}readonly{% endif %}></td>
+                    <td><input type="number" step="0.001" name="p2" value="{{ p2 }}"></td>
+                    <td><input type="number" step="0.001" name="p2_offset" value="{{ p2_offset }}"></td>
+                    <td><input type="checkbox" name="p1_offset" {% if initial_p1_offset or initialize %}checked{% endif %}></td>
+                </tr>
+            </table>
+            <br>
+            <label>Select Category:</label>
+            <select class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" name="category">
+                {% for category in units_list.keys() %}
+                    <option value="{{ category }}" {% if category == selected_category %}selected{% endif %}>{{ category }}</option>
+                {% endfor %}
+            </select>
+            <br><br>
+            <button class="btn btn-outline-primary float-right align-middle" type="submit">Calculate</button>
+        </form>
         <br>
-        <label>Select Category:</label>
-        <select name="category">
-            {% for category in units_list.keys() %}
-                <option value="{{ category }}" {% if category == selected_category %}selected{% endif %}>{{ category }}</option>
-            {% endfor %}
-        </select>
-        <br><br>
-        <button type="submit">Calculate</button>
-    </form>
-    <br>
-    {% if result is defined %}
-        <h2>Result: {{ result }}</h2>
-    {% endif %}
+        {% if result is defined %}
+            <h2>Result: {{ result }}</h2>
+        {% endif %}
+    </div>
+    {% include 'footer.html' %}
 </body>
 </html>

@@ -8,32 +8,23 @@ engine = create_engine(db_connection_string,
                          "ssl_ca": "/etc/ssl/cert.pem"
                        }})
 
-def load_jobs_from_db():
-  with engine.connect() as conn:
-    result = conn.execute(text("SELECT * FROM jobs"))
-    result_all = result.fetchall()
-    column_names = result.keys()
-    jobs = []
-    for row in result_all:
-      jobs.append(dict(zip(column_names, row)))
-    return jobs
+def load_dictionary():
+    units_list = {}
 
+    with engine.connect() as conn:
+        # Query the units_list table
+        query = text("SELECT unit_group, unit_name, unit_value FROM units_list")
+        result = conn.execute(query)
 
-def load_job_from_db(id):
-  with engine.connect() as conn:
-    result = conn.execute(text("SELECT * FROM jobs"))
-    result_all = result.fetchall()
-    column_names = result.keys()
-    total_rows = result.rowcount
-    if (total_rows < int(id)) or (int(id) < 1):
-      return None
-    else:
-      job = dict(zip(column_names, result_all[int(id)-1]))
-      return job
-    
+        # Populate the units_list dictionary
+        for row in result:
+            unit_group = row[0]
+            unit_name = row[1]
+            unit_value = row[2]
 
-def add_application_to_db(job_id, data):
-  with engine.connect() as conn:
-    query2 = "INSERT INTO applications (job_id, full_name, email, linkedin_url, education, work_experience, resume_url) VALUES ("+ job_id  + ",\'" + data['full_name'] + "\',\'" + data['email'] + "\',\'" + data['linkedin_url'] + "\',\'" + data['education'] + "\',\'" + data['work_experience'] + "\',\'" + data['resume_url'] + "\')"
-    query = text(query2)
-    conn.execute(query)
+            if unit_group not in units_list:
+                units_list[unit_group] = {}
+
+            units_list[unit_group][unit_name] = unit_value
+
+    return units_list

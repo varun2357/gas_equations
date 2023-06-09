@@ -10,20 +10,20 @@
     <div class = "container">
         <h1>Select a category:</h1>
         <form action="/conversion" method="POST">
-            <select name="category">
+            <select class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" name="category">
                 {% for category in categories %}
                     <option value="{{ category }}">{{ category }}</option>
                 {% endfor %}
             </select>
-            <button type="submit">Conversion</button>
+            <button class="btn btn-outline-primary float-right align-middle" type="submit">Conversion</button>
         </form>
         <form action="/size" method="POST">
-            <select name="category">
+            <select class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" name="category">
                 {% for category in categories %}
                     <option value="{{ category }}">{{ category }}</option>
                 {% endfor %}
             </select>
-            <button type="submit">Size</button>
+            <button class="btn btn-outline-primary float-right align-middle" type="submit">Size</button>
         </form>
     </div>
     {% include 'footer.html' %}
