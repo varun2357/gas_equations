@@ -3,32 +3,6 @@
 <head>
     {% include 'bootstrap.html' %}
     <title>Size</title>
-    <style>
-        .input-row {
-            display: flex;
-            align-items: center;
-        }
-
-        .input-row label {
-            margin-right: 10px;
-            width: 150px;
-        }
-
-        .input-row input[type="number"] {
-            width: 100%;
-        }
-
-        @media (max-width: 768px) {
-            .input-row {
-                flex-direction: column;
-            }
-
-            .input-row label {
-                margin-bottom: 5px;
-                width: auto;
-            }
-        }
-    </style>
 </head>
 <body>
     {% include 'nav.html' %}
@@ -41,15 +15,15 @@
             <div class="row">
                 <div class="col-3">
                     <label for="sg1">SG1:</label>
-                    <input type="number" step="0.001" name="sg1" value="{{ initial_sg1 }}" {% if initialize %}readonly{% endif %}>
+                    <input style = "width:60%" type="number" step="0.001" name="sg1" value="{{ initial_sg1 }}" {% if initialize %}readonly{% endif %}>
                 </div>
                 <div class="col-3">
                     <label for="sg2">SG2:</label>
-                    <input type="number" step="0.001" name="sg2" value="{{ sg2 }}">
+                    <input style = "width:60%" type="number" step="0.001" name="sg2" value="{{ sg2 }}">
                 </div>
                 <div class="col-4">
                     <label for="sg2_offset">Offset SG2:</label>
-                    <input type="number" step="0.001" name="sg2_offset" value="{{ sg2_offset }}">
+                    <input style = "width:60%" type="number" step="0.001" name="sg2_offset" value="{{ sg2_offset }}">
                 </div>
                 <div class="col-2">
                     <label for="sg1_offset">SG1 Offset:</label>
@@ -59,37 +33,37 @@
             </div>
             <div class="row">
                 <div class="col-3">
-                    <label for="t1">T1:</label>
-                    <input type="number" step="0.001" name="t1" value="{{ initial_t1 }}" {% if initialize %}readonly{% endif %}>
+                    <label for="t1">T1 :</label>
+                    <input style = "width:60%" type="number" step="0.001" name="t1" value="{{ initial_t1 }}" {% if initialize %}readonly{% endif %}>
                 </div>
                 <div class="col-3">
-                    <label for="t2">T2:</label>
-                    <input type="number" step="0.001" name="t2" value="{{ t2 }}">
+                    <label for="t2">T2 :</label>
+                    <input style = "width:60%" type="number" step="0.001" name="t2" value="{{ t2 }}">
                 </div>
                 <div class="col-4">
-                    <label for="t2_offset">Offset T2:</label>
-                    <input type="number" step="0.001" name="t2_offset" value="{{ t2_offset }}">
+                    <label for="t2_offset">Offset T2 :</label>
+                    <input style = "width:60%" type="number" step="0.001" name="t2_offset" value="{{ t2_offset }}">
                 </div>
                 <div class="col-2">
-                    <label for="t1_offset">T1 Offset:</label>
+                    <label for="t1_offset">T1 Offset :</label>
                     <input type="checkbox" name="t1_offset" {% if initial_t1_offset or initialize %}checked{% endif %}>
                 </div>
             </div>
             <div class="row">
                 <div class="col-3">
-                    <label for="p1">P1:</label>
-                    <input type="number" step="0.001" name="p1" value="{{ initial_p1 }}" {% if initialize %}readonly{% endif %}>
+                    <label for="p1">P1 :</label>
+                    <input style = "width:60%" type="number" step="0.001" name="p1" value="{{ initial_p1 }}" {% if initialize %}readonly{% endif %}>
                 </div>
                 <div class="col-3">
-                    <label for="p2">P2:</label>
-                    <input type="number" step="0.001" name="p2" value="{{ p2 }}">
+                    <label for="p2">P2 :</label>
+                    <input style = "width:60%" type="number" step="0.001" name="p2" value="{{ p2 }}">
                 </div>
                 <div class="col-4">
-                    <label for="p2_offset">Offset P2:</label>
-                    <input type="number" step="0.001" name="p2_offset" value="{{ p2_offset }}">
+                    <label for="p2_offset">Offset P2 :</label>
+                    <input style = "width:60%" type="number" step="0.001" name="p2_offset" value="{{ p2_offset }}">
                 </div>
                 <div class="col-2">
-                    <label for="p1_offset">P1 Offset:</label>
+                    <label for="p1_offset">P1 Offset :</label>
                     <input type="checkbox" name="p1_offset" {% if initial_p1_offset or initialize %}checked{% endif %}>
                 </div>
                 <br>
