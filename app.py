@@ -1,5 +1,5 @@
 from flask import Flask, render_template, jsonify, request
-from database import load_dictionary, store_conversion, load_conversion_history
+from database import load_dictionary, store_conversion, load_conversion_history, store_size, load_size_history
 from calculations import cal_sf_not_au, cal_sf_au, convert_units
 
 app = Flask(__name__)
@@ -123,15 +123,17 @@ def size():
         else:
             if category == 'au':
                 result = cal_sf_au(sg1,sg2,t1,t2,p1,p2)
+                store_size(sg1, sg2, t1, t2, p1, p2, result, category)
             else:
                 result = cal_sf_not_au(sg1,sg2,t1,t2,p1,p2)
-
+                store_size(sg1, sg2, t1, t2, p1, p2, result, category)
+        history = load_size_history()
         return render_template('size.html', result=result, units_list=units_list,
                                initial_sg1=initial_sg1, initial_t1=initial_t1, initial_p1=initial_p1,
                                initial_sg1_offset=initial_sg1_offset, initial_t1_offset=initial_t1_offset,
-                               initial_p1_offset=initial_p1_offset,selected_category=category)
+                               initial_p1_offset=initial_p1_offset,selected_category=category,size_history=history)
 
-    return render_template('size.html', units_list=units_list)
+    return render_template('size.html', units_list=units_list, size_history=history)
 @app.route("/api/units")
 def list_units():
   return jsonify(units_list)

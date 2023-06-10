@@ -112,6 +112,37 @@
             <h2>Result: {{ result }}</h2>
         {% endif %}
     </div>
+    <div class="container">
+        <h2>Size History</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>SG1</th>
+                    <th>SG2</th>
+                    <th>T1</th>
+                    <th>T2</th>
+                    <th>P1</th>
+                    <th>P2</th>
+                    <th>Result</th>
+                    <th>Category</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for size in size_history %}
+                    <tr>
+                        <td>{{ size.sg1 }}</td>
+                        <td>{{ size.sg2 }}</td>
+                        <td>{{ size.t1 }}</td>
+                        <td>{{ size.t2 }}</td>
+                        <td>{{ size.p1 }}</td>
+                        <td>{{ size.p2 }}</td>
+                        <td>{{ size.result }}</td>
+                        <td>{{ size.category }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
     {% include 'footer.html' %}
 </body>
 </html>
