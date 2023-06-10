@@ -33,7 +33,7 @@
 <body>
     {% include 'nav.html' %}
     {% include 'banner.html' %}
-    <div class="container">
+    <div class="container border-bottom">
         <h1>Size</h1>
         <form action="/size" method="POST">
             <button class="btn btn-outline-primary float-right align-middle" type="submit" name="initialize" value="true">Initialize</button>
@@ -94,10 +94,7 @@
                 </div>
                 <br>
             </div>
-            
-            
             <br>
-           
             <label>Select Category:</label>
             <select class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" name="category">
                 {% for category in units_list.keys() %}
@@ -108,9 +105,11 @@
             <button class="btn btn-outline-primary float-right align-middle" type="submit">Calculate</button>
         </form>
         <br>
-        {% if result is defined %}
-            <h2>Result: {{ result }}</h2>
-        {% endif %}
+        <div class = "container" style="margin-bottom:16px;margin-top:16px;padding-bottom:8px;padding-top:8px;">
+            {% if result is defined %}
+                <h2>Result: {{ result }}</h2>
+            {% endif %}
+        </div>
     </div>
     <div class="container">
         <h2>Size History</h2>

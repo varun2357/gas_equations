@@ -4,9 +4,9 @@ from calculations import cal_sf_not_au, cal_sf_au, convert_units
 
 app = Flask(__name__)
 
-sg1 = 0.0
-t1 = 0.0
-p1 = 0.0
+sg1 = 0
+t1 = 0
+p1 = 0
 sg2 = 0.0
 t2 = 0.0
 p2 = 0.0
@@ -26,7 +26,7 @@ def hello_world():
 @app.route('/conversion', methods=['GET', 'POST'])
 def conversion():
     selected_category = None  # Default value for selected_category
-
+    history = load_conversion_history()  # Retrieve the updated history
     if request.method == 'POST':
         category_from_home = request.form.get('category_from_home')
         selected_category = category_from_home or request.form.get('category')
@@ -45,19 +45,18 @@ def conversion():
                 if value1 is not None and value2 is not None:
                     sum_values = convert_units(units_list, selected_category, input1, input2, float(input3))
                     store_conversion(input1, input2, input3, sum_values, selected_category)  # Store the conversion in the history
-                    history = load_conversion_history()  # Retrieve the updated history
+                    
                     return render_template('conversion.html', categories=units_list.keys(), units=selected_units, selected_category=selected_category, selected_input1=input1, selected_input2=input2, input3=input3, sum_values=sum_values, history=history)
                 else:
                     error_message = "Invalid units selected."
-                    return render_template('conversion.html', categories=units_list.keys(), units=selected_units, selected_category=selected_category, selected_input1=input1, selected_input2=input2, input3=input3, error_message=error_message)
+                    return render_template('conversion.html', categories=units_list.keys(), units=selected_units, selected_category=selected_category, selected_input1=input1, selected_input2=input2, input3=input3, error_message=error_message, history=history)
             else:
                 error_message = "Please fill in all input fields."
-                return render_template('conversion.html', categories=units_list.keys(), units=selected_units, selected_category=selected_category, selected_input1=input1, selected_input2=input2, input3=input3, error_message=error_message)
+                return render_template('conversion.html', categories=units_list.keys(), units=selected_units, selected_category=selected_category, selected_input1=input1, selected_input2=input2, input3=input3, error_message=error_message, history=history)
         else:
             error_message = "Please select a category."
-            return render_template('conversion.html', categories=units_list.keys(), units={}, selected_category=selected_category, selected_input1=None, selected_input2=None, input3=None, error_message=error_message)
+            return render_template('conversion.html', categories=units_list.keys(), units={}, selected_category=selected_category, selected_input1=None, selected_input2=None, input3=None, error_message=error_message, history=history)
     else:
-        history = load_conversion_history()  # Retrieve the conversion history
         return render_template('conversion.html', categories=units_list.keys(), units={}, selected_category=selected_category, selected_input1=None, selected_input2=None, input3=None, sum_values=None, history=history)
 
 
