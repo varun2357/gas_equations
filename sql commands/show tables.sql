@@ -2,6 +2,8 @@ show tables;
 
 select * from units_list;
 
+select * from conversion_history;
+
 select * from sfu;		
 
 select * from mfu;

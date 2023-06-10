@@ -1,5 +1,5 @@
 from flask import Flask, render_template, jsonify, request
-from database import load_dictionary
+from database import load_dictionary, store_conversion, load_conversion_history
 from calculations import cal_sf_not_au, cal_sf_au, convert_units
 
 app = Flask(__name__)
@@ -20,7 +20,8 @@ units_list = load_dictionary()
 
 @app.route("/")
 def hello_world():
-  return render_template('home.html',categories=units_list.keys())
+    return render_template('home.html', categories=units_list.keys())
+
 
 @app.route('/conversion', methods=['GET', 'POST'])
 def conversion():
@@ -43,7 +44,9 @@ def conversion():
 
                 if value1 is not None and value2 is not None:
                     sum_values = convert_units(units_list, selected_category, input1, input2, float(input3))
-                    return render_template('conversion.html', categories=units_list.keys(), units=selected_units, selected_category=selected_category, selected_input1=input1, selected_input2=input2, input3=input3, sum_values=sum_values)
+                    store_conversion(input1, input2, input3, sum_values, selected_category)  # Store the conversion in the history
+                    history = load_conversion_history()  # Retrieve the updated history
+                    return render_template('conversion.html', categories=units_list.keys(), units=selected_units, selected_category=selected_category, selected_input1=input1, selected_input2=input2, input3=input3, sum_values=sum_values, history=history)
                 else:
                     error_message = "Invalid units selected."
                     return render_template('conversion.html', categories=units_list.keys(), units=selected_units, selected_category=selected_category, selected_input1=input1, selected_input2=input2, input3=input3, error_message=error_message)
@@ -54,7 +57,9 @@ def conversion():
             error_message = "Please select a category."
             return render_template('conversion.html', categories=units_list.keys(), units={}, selected_category=selected_category, selected_input1=None, selected_input2=None, input3=None, error_message=error_message)
     else:
-        return render_template('conversion.html', categories=units_list.keys(), units={}, selected_category=selected_category, selected_input1=None, selected_input2=None, input3=None, sum_values=None)
+        history = load_conversion_history()  # Retrieve the conversion history
+        return render_template('conversion.html', categories=units_list.keys(), units={}, selected_category=selected_category, selected_input1=None, selected_input2=None, input3=None, sum_values=None, history=history)
+
 
 @app.route('/size', methods=['GET', 'POST'])
 def size():

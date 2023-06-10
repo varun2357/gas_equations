@@ -7,9 +7,9 @@
 <body>
     {% include 'nav.html' %}
     {% include 'banner.html' %}
-    <div class = "container">
+    <div class="container">
         <h1>Conversion</h1>
-        <h2>Unit Conversion in the category of {{selected_category}}</h2>
+        <h2>Unit Conversion in the category of {{ selected_category }}</h2>
         <form action="/conversion" method="POST">
             {% if units %}
                 <select class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" name="input1">
@@ -23,7 +23,7 @@
                     {% endfor %}
                 </select>
             {% endif %}
-            <input type="text" name="input3" value="{{ input3 }}">
+            <input type="number" step="0.00001" name="input3" value="{{ input3 }}">
             <button class="btn btn-outline-primary float-right align-middle" type="submit">Calculate</button>
             <input type="hidden" name="category" value="{{ selected_category }}">
         </form>
@@ -32,6 +32,29 @@
         {% elif sum_values is defined %}
             <h2>Sum of Inputs: {{ sum_values }}</h2>
         {% endif %}
+        <h2>Conversion History</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Input 1</th>
+                    <th>Input 2</th>
+                    <th>Input 3</th>
+                    <th>Result</th>
+                    <th>Category</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entry in history %}
+                    <tr>
+                        <td>{{ entry.input1 }}</td>
+                        <td>{{ entry.input2 }}</td>
+                        <td>{{ entry.input3 }}</td>
+                        <td>{{ entry.result }}</td>
+                        <td>{{ entry.category }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
     {% include 'footer.html' %}
 </body>
